@@ -1,0 +1,45 @@
+---------------Broken Models/Entity into three main groups---------------
+-Files
+-Repos (for repository, not to be confused with repository layer)
+-Users
+
+
+---------------Database relations---------------
+Each User has many Repos (1 to many)
+Each Repo has many Files (1 to many)
+
+
+---------------Table Creation---------------
+FileEntity is to create a table named - "files"
+RepoEntity is to create a table named - "repositories"
+UserEntity is to create a table named - "users"
+
+
+---------------MySQL Code---------------
+CREATE DATABASE coductivityDB;
+
+USE coductivityDB;
+
+CREATE TABLE users (
+    userID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE repositories (
+    repoID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    ownerID BIGINT NOT NULL,
+    FOREIGN KEY (ownerID) REFERENCES users(userID) ON DELETE CASCADE
+);
+
+CREATE TABLE files (
+    fileID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    path VARCHAR(255) NOT NULL,  -- Full path e.g., "src/main/test.java"
+    name VARCHAR(255) NOT NULL,  -- Just file/folder name e.g., "test.java"
+    isFolder BOOLEAN NOT NULL,   -- true = folder, false = file
+    content LONGBLOB,            -- Stores file data (null if folder)
+    repo_ID BIGINT NOT NULL,
+    FOREIGN KEY (repo_ID) REFERENCES repositories(repoID) ON DELETE CASCADE
+);
