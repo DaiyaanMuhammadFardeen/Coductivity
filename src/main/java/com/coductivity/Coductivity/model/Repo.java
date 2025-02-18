@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "repositories")
-public class RepoEntity {
+public class Repo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +19,8 @@ public class RepoEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
-    private UserEntity owner;
+    private User owner;
 
     @OneToMany(mappedBy = "repository", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<FileEntity> files;
+    private List<File> files;
 }

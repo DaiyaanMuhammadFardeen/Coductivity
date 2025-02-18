@@ -6,7 +6,7 @@ import lombok.*;
 @Data
 @Entity
 @Table(name = "files")
-public class FileEntity {
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fileID;
@@ -22,5 +22,5 @@ public class FileEntity {
 
     @ManyToOne
     @JoinColumn(name = "repo_id", nullable = false)
-    private RepoEntity repository;
+    private Repo repository;
 }
